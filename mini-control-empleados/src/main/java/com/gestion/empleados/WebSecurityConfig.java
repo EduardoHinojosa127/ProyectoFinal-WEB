@@ -25,7 +25,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	@Bean
 	protected UserDetailsService userDetailsService() {
 		UserDetails usuario1 = User
-				.withUsername("christian")
+				.withUsername("eduardo")
 				.password("$2a$10$21k9QLX0vdSytZ36T56yHeDwn2y6DiHdJ2k7fCzccV7CuskmNQmEq")
 				.roles("USER")	
 				.build();
@@ -43,13 +43,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 		    .antMatchers("/").permitAll()
-		    .antMatchers("/form/*","/eliminar/*").hasRole("ADMIN")
+		    .antMatchers("/form","/form/*","/eliminar/*").hasRole("ADMIN")
 		    .anyRequest().authenticated()
 		    .and()
 		    .formLogin()
 		        .loginPage("/login")
 		        .permitAll()
 		    .and()
-		    .logout().permitAll();
+		    .logout().permitAll()
+		    .and().exceptionHandling().accessDeniedPage("/error");
 	}
 }

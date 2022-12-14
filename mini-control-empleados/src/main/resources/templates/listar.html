@@ -9,8 +9,8 @@
 	<header th:replace="layout/layout :: header"></header>
 
 	<div class="py-4 ml-5 mr-5">
-		<div class="card bg-light">
-			<div class="card-header" th:text="${titulo}"></div>
+		<div class="card bg-dark">
+			<div class="card-header text-light" th:text="${titulo}"></div>
 			<div class="card-body">
 				<h4 class="card-title">
 					<a th:href="@{/form}" class="btn btn-primary">Agregar empleado</a>
@@ -20,7 +20,7 @@
 						sec:authorize="hasRole('ADMIN')" th:href="@{/exportarExcel}"
 						class="btn btn-success">Exportar a Excel</a>
 				</h4>
-				<table class="table table-striped">
+				<table class="table table-dark table-striped">
 					<thead>
 						<tr>
 							<th>ID</th>
@@ -31,9 +31,7 @@
 							<th>Telefono</th>
 							<th>Sexo</th>
 							<th>Salario</th>
-							<th>Detalles</th>
-							<th sec:authorize="hasRole('ADMIN')">Editar</th>
-							<th sec:authorize="hasRole('ADMIN')">Eliminar</th>
+							<th sec:authorize="hasRole('ADMIN')" class="text-center">Opciones</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -44,17 +42,20 @@
 							<td th:text="${empleado.email}"></td>
 							<td th:text="${empleado.fecha}"></td>
 							<td th:text="${empleado.telefono}"></td>
-							<td th:text="${empleado.sexo}"></td>
-							<td th:text="${empleado.salario}"></td>
-							<td><a class="btn btn-info btn-sm"
-								th:href="@{/ver/} + ${empleado.id}">Detalles</a></td>
-							<td sec:authorize="hasRole('ADMIN')"><a
+							<td>
+								<p th:if="${empleado.sexo == 'M'}">Masculino</p>
+								<p th:unless="${empleado.sexo == 'M'}">Femenino</p></td>
+							<td th:text="'S/ '+${empleado.salario}"></td>
+							<td>
+							<div class="center-block"><a class="btn btn-info btn-sm"
+								th:href="@{/ver/} + ${empleado.id}">Detalles</a>
+								<a
 								class="btn btn-warning btn-sm"
-								th:href="@{/form/} + ${empleado.id}">Editar</a></td>
-							<td sec:authorize="hasRole('ADMIN')"><a
+								th:href="@{/form/} + ${empleado.id}">Editar</a>
+								<a
 								class="btn btn-danger btn-sm"
 								th:href="@{/eliminar/} + ${empleado.id}"
-								onclick="return confirm('¿Estás seguro de eliminar al empleado?');">Eliminar</a></td>
+								onclick="return confirm('¿Estás seguro de eliminar al empleado?');">Eliminar</a></div></td>
 						</tr>
 					</tbody>
 				</table>

@@ -150,4 +150,8 @@ public class EmpleadoController {
 		EmpleadoExporterExcel exporter = new EmpleadoExporterExcel(empleados);
 		exporter.exportar(response);
 	}
+	@GetMapping("/error")
+	public String error() {
+		return "error";
+	}
 }
